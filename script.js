@@ -269,7 +269,7 @@ function createChart() {
                 y: 48.1528,
                 xref: 'x',
                 yref: 'y',
-                text: '<b style="color:rgba(130, 0, 0, 0.8);">47,1528 Km/h',
+                text: '<b style="color:rgba(130, 0, 0, 0.8);">47 Km/h',
                 showarrow: false,
 
             },
@@ -278,8 +278,7 @@ function createChart() {
                 y: 47.24092,
                 xref: 'x',
                 yref: 'y',
-                text: '<b style="color:rgba(0, 0, 130, 0.8);">46.24092 Km/h',
-                text: '<b style="color:rgba(0, 0, 130, 0.8);">46,24092 Km/h',
+                text: '<b style="color:rgba(0, 0, 130, 0.8);">46 Km/h',
                 showarrow: false,
 
             },
