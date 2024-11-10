@@ -54,11 +54,11 @@ function createChart() {
         const day = parseInt(item.FECHA.slice(4, 6));
         return new Date(year, month, day);
     });
-    const velocities = data.map(item => parseFloat(item.velocidad));
+    const velocidades = data.map(item => parseFloat(item.velocidad));
 
     const trace = {
         x: dates,
-        y: velocities,
+        y: velocidades,
         type: 'scatter',
         mode: 'lines+markers',
         name: 'Velocidad',
@@ -87,11 +87,11 @@ function createChart() {
     const chartDiv = document.getElementById('chart');
     chartDiv.on('plotly_hover', function(eventData) {
         const pointIndex = eventData.points[0].pointIndex;
-        const velocity = velocities[pointIndex];
-        
-        if (velocity > 40) {
+        const velocidad = velocidades[pointIndex]; // Usamos 'velocidad' aquí
+
+        if (velocidad > 40) {
             highWind.play();
-        } else if (velocity > 30) {
+        } else if (velocidad > 30) {
             mediumWind.play();
         } else {
             lowWind.play();
