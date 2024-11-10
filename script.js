@@ -322,7 +322,7 @@ function createChart() {
 document.addEventListener('DOMContentLoaded', createChart);
 
 // Define los sonidos para los diferentes niveles de velocidad
-const highWindAudio = new Audio("highWind.mp3"); // Para velocidades altas
+const highWindAudio = new Audio("nature008.mp3"); // Para velocidades altas
 const mediumWindAudio = new Audio("mediumWind.mp3"); // Para velocidades medias
 const lowWindAudio = new Audio("lowWind.mp3"); // Para velocidades bajas
 let currentAudio = null; // Variable para el audio actual
