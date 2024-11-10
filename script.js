@@ -1,8 +1,9 @@
 // Cargar los archivos de audio
 const highWind = new Audio('nature008.mp3');
-const mediumWind = new Audio('mediumWind.mp3');
+const mediumWind = new Audio('vientoencampo.mp3');
 const lowWind = new Audio('lowWind.mp3');
 
+// Los datos
 const data = [
     { "FECHA": "240107", "velocidad": "43.04592" },
     { "FECHA": "240109", "velocidad": "31.694616" },
@@ -68,8 +69,6 @@ function createChart() {
     const layout = {
         xaxis: { /* configuración del eje x */ },
         yaxis: { /* configuración del eje y */ },
-        shapes: [ /* configuración de las líneas y círculos */ ],
-        annotations: [ /* configuración de las anotaciones */ ],
         autosize: true,
         height: 600,
         margin: { l: 50, r: 50, b: 100, t: 20, pad: 4 },
@@ -86,20 +85,27 @@ function createChart() {
     // Evento al pasar por cada punto del gráfico
     const chartDiv = document.getElementById('chart');
     chartDiv.on('plotly_hover', function(eventData) {
+        console.log("Hovered over point", eventData); // Para depurar
         const pointIndex = eventData.points[0].pointIndex;
         const velocidad = velocidades[pointIndex]; // Usamos 'velocidad' aquí
+        console.log("Velocidad:", velocidad); // Verificar velocidad
 
+        // Reproducir el sonido según la velocidad
         if (velocidad > 40) {
+            console.log("Reproduciendo audio de alta velocidad");
             highWind.play();
         } else if (velocidad > 30) {
+            console.log("Reproduciendo audio de velocidad media");
             mediumWind.play();
         } else {
+            console.log("Reproduciendo audio de baja velocidad");
             lowWind.play();
         }
     });
 
     // Detener el audio al salir del punto
     chartDiv.on('plotly_unhover', function() {
+        console.log("Deteniendo el audio");
         highWind.pause();
         mediumWind.pause();
         lowWind.pause();
@@ -111,3 +117,4 @@ function createChart() {
 }
 
 document.addEventListener('DOMContentLoaded', createChart);
+
