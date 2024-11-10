@@ -50,12 +50,6 @@
                     range: [0, 50],
                     showgrid: false
                 },
-                shapes: [
-                    // Agrega las formas y anotaciones aquí
-                ],
-                annotations: [
-                    // Agrega las anotaciones aquí
-                ],
                 autosize: true,
                 height: 600,
                 margin: { l: 50, r: 50, b: 100, t: 20, pad: 4 }
@@ -64,8 +58,8 @@
             const config = { responsive: true, displayModeBar: false, staticPlot: true };
 
             Plotly.newPlot('chart', [trace], layout, config).then(chartElement => {
-                // Define los sonidos
-                const highWindAudio = new Audio("nature008.mp3");
+                // Define los sonidos y agrega rutas completas si es necesario
+                const highWindAudio = new Audio("highWind.mp3");
                 const mediumWindAudio = new Audio("mediumWind.mp3");
                 const lowWindAudio = new Audio("lowWind.mp3");
                 let currentAudio = null;
@@ -73,7 +67,15 @@
                 // Evento para reproducir sonido
                 chartElement.on('plotly_hover', eventData => {
                     const windSpeed = parseFloat(eventData.points[0].y);
+                    console.log("Hover detected. Wind speed:", windSpeed); // Verificar en consola
 
+                    // Detener el audio actual si está reproduciéndose
+                    if (currentAudio && !currentAudio.paused) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
+
+                    // Seleccionar audio en función de la velocidad del viento
                     if (windSpeed >= 40) {
                         currentAudio = highWindAudio;
                         currentAudio.volume = Math.min(1, (windSpeed - 40) / 10);
@@ -85,30 +87,12 @@
                         currentAudio.volume = Math.min(1, windSpeed / 10);
                     }
 
+                    // Reproducir el audio seleccionado
                     currentAudio.currentTime = 0;
-                    currentAudio.play();
+                    currentAudio.play().catch(error => console.log("Audio playback prevented:", error));
                 });
 
-                // Evento para detener sonido
+                // Evento para detener sonido al salir del punto
                 chartElement.on('plotly_unhover', () => {
-                    if (currentAudio) {
-                        currentAudio.pause();
-                        currentAudio.currentTime = 0;
-                    }
-                });
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // Si usas un archivo JSON, puedes cargarlo así:
-            // fetch('./data.json')
-            //     .then(response => response.json())
-            //     .then(data => createChart(data))
-            //     .catch(error => console.error('Error cargando el archivo JSON:', error));
-            
-            // Si los datos están en el código, usa esto directamente
-            createChart(data);
-        });
-    </script>
-</body>
-</html>
+                    console.log("Unhover detected"); // Verificar en consola
+     
