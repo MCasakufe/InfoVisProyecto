@@ -320,3 +320,41 @@ function createChart() {
 }
 
 document.addEventListener('DOMContentLoaded', createChart);
+
+// Define los sonidos para los diferentes niveles de velocidad
+const highWindAudio = new Audio("highWind.mp3"); // Para velocidades altas
+const mediumWindAudio = new Audio("mediumWind.mp3"); // Para velocidades medias
+const lowWindAudio = new Audio("lowWind.mp3"); // Para velocidades bajas
+let currentAudio = null; // Variable para el audio actual
+
+// Obtén el elemento del gráfico y añade el evento para el sonido al pasar el mouse
+const chartElement = document.getElementById('chart');
+chartElement.on('plotly_hover', function(eventData) {
+    // Obtén la velocidad en el punto actual
+    const windSpeed = parseFloat(eventData.points[0].y);
+
+    // Selecciona el audio y ajusta el volumen en función de la velocidad
+    if (windSpeed >= 40) {
+        currentAudio = highWindAudio;
+        currentAudio.volume = Math.min(1, (windSpeed - 40) / 10);
+    } else if (windSpeed >= 20) {
+        currentAudio = mediumWindAudio;
+        currentAudio.volume = Math.min(1, (windSpeed - 20) / 10);
+    } else {
+        currentAudio = lowWindAudio;
+        currentAudio.volume = Math.min(1, windSpeed / 10);
+    }
+
+    // Reinicia y reproduce el audio seleccionado
+    currentAudio.currentTime = 0;
+    currentAudio.play();
+});
+
+// Evento para detener el sonido cuando se sale del punto
+chartElement.on('plotly_unhover', function() {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+    }
+});
+
