@@ -95,4 +95,18 @@
                 // Evento para detener sonido al salir del punto
                 chartElement.on('plotly_unhover', () => {
                     console.log("Unhover detected"); // Verificar en consola
-     
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                    }
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            createChart(data);
+        });
+    </script>
+</body>
+</html>
+
