@@ -59,7 +59,7 @@
 
             Plotly.newPlot('chart', [trace], layout, config).then(chartElement => {
                 // Define los sonidos y agrega rutas completas si es necesario
-                const highWindAudio = new Audio("highWind.mp3");
+                const highWindAudio = new Audio("nature008.mp3");
                 const mediumWindAudio = new Audio("mediumWind.mp3");
                 const lowWindAudio = new Audio("lowWind.mp3");
                 let currentAudio = null;
